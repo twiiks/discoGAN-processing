@@ -1,12 +1,17 @@
 from flask import Flask, request
 import json
+import threading
+import time
 
 app = Flask(__name__)
 
+def thread_test():
+    time.sleep(2)
+    print('hi')
 
 @app.route('/fontto/processing', methods=['POST'])
 def processing_fontto():
-    print(request.json)
+    threading.Thread(target=thread_test).start()
     return json.dumps(request.json)
 
 
@@ -16,4 +21,4 @@ def test_root():
 
 
 if __name__ == '__main__':
-    app.run(port=5959)
+    app.run(port=5959,debug=True)
