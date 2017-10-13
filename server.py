@@ -12,14 +12,15 @@ app = Flask(__name__)
 # result test
 def testDumpResult(testResultB64):
     afterTestResultDic = {}
-    afterTestResultDic[ord('고')] = testResultB64.decode('utf-8')
+    afterTestResultDic[ord('폰')] = testResultB64.decode('utf-8')
+    afterTestResultDic[ord('토')] = testResultB64.decode('utf-8')
     return afterTestResultDic
 
 # jpg save test
-def testB64Image(uniChar, b64Image):
-    fh = open("{}.jpg".format(uniChar), "wb")
-    fh.write(base64.b64decode(b64Image))
-    fh.close()
+# def saveB64Image(uniChar, b64Image):
+#     fh = open("{}.jpg".format(uniChar), "wb")
+#     fh.write(base64.b64decode(b64Image))
+#     fh.close()
 
 def makeHandwritesDic(urlList):
     handwritesDic = {}
