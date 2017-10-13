@@ -13,5 +13,4 @@ pyasn1==0.3.7
 rsa==3.4.2
 s3transfer==0.1.11
 six==1.11.0
-tornado==4.5.2
 Werkzeug==0.12.2
