@@ -2,17 +2,52 @@ from flask import Flask, request
 import json
 import threading
 import time
+import requests
+import base64
 
 app = Flask(__name__)
 
-def thread_test():
-    time.sleep(2)
-    print('hi')
+
+# result test
+def testDumpResult(testResultB64):
+    afterTestResultDic = {}
+    afterTestResultDic[ord('고')] = testResultB64.decode('utf-8')
+    return afterTestResultDic
+
+# jpg save test
+def testB64Image(uniChar, b64Image):
+    fh = open("{}.jpg".format(uniChar), "wb")
+    fh.write(base64.b64decode(b64Image))
+    fh.close()
+
+def makeHandwritesDic(urlList):
+    handwritesDic = {}
+    for url in urlList:
+        # print(url)
+        uniChar = ord(url.split('_')[-1])
+
+        response = requests.get(url)
+        b64Image = base64.b64encode(response.content)
+
+        # testB64Image(uniChar, b64Image)
+
+        handwritesDic[uniChar] = b64Image
+    return handwritesDic
+
 
 @app.route('/fontto/processing', methods=['POST'])
 def processing_fontto():
-    threading.Thread(target=thread_test).start()
-    return json.dumps(request.json)
+    return json.dumps(backgroundProcessing(request))
+
+def backgroundProcessing(request):
+    time.sleep(2)
+    body = request.json
+    email = body['email']
+    handwritesDic = makeHandwritesDic(body['handwrites'])
+
+    # ml code here
+    result = testDumpResult(handwritesDic[ord('누')])
+    return result
 
 
 @app.route('/')
