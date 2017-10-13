@@ -11,6 +11,11 @@ def processing_fontto():
     print(request.json)
     return json.dumps(request.json)
 
+
+@app.route('/')
+def test_root():
+    return 'OK'
+
 if __name__ == '__main__':
     http_server = HTTPServer(WSGIContainer(app))
     http_server.listen(5959)
