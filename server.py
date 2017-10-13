@@ -9,26 +9,23 @@ import base64
 import os
 from PIL import Image, ImageChops
 from io import BytesIO
+from written2all import written2all
 
 app = Flask(__name__)
 
 
 # result test
-def testDumpResult(handwritesDic):
-    afterTestResultDic = {}
-    print(handwritesDic)
-    with open(handwritesDic[45572], 'rb') as image_file:
-        afterTestResultDic[ord('폰')] = base64.b64encode(image_file.read()).decode('utf-8')
-    with open(handwritesDic[48528], 'rb') as image_file:
-        afterTestResultDic[ord('토')] = base64.b64encode(image_file.read()).decode('utf-8')
-    return afterTestResultDic
+# def testDumpResult(handwritesDic):
+#     afterTestResultDic = {}
+#     print(handwritesDic)
+#     with open(handwritesDic[45572], 'rb') as image_file:
+#         afterTestResultDic[ord('폰')] = base64.b64encode(image_file.read()).decode('utf-8')
+#     with open(handwritesDic[48528], 'rb') as image_file:
+#         afterTestResultDic[ord('토')] = base64.b64encode(image_file.read()).decode('utf-8')
+#     return afterTestResultDic
 
 
 def scale(image, max_size, method=Image.ANTIALIAS):
-    """
-    resize 'image' to 'max_size' keeping the aspect ratio
-    and place it in center of white 'max_size' image
-    """
     im_aspect = float(image.size[0]) / float(image.size[1])
     out_aspect = float(max_size[0]) / float(max_size[1])
     if im_aspect >= out_aspect:
@@ -52,16 +49,17 @@ def trimAndSave(b64Image, email, fileName):
     diff = ImageChops.difference(im, bg)
     diff = ImageChops.add(diff, diff, 2.0, -100)
     bbox = diff.getbbox()
+
     if bbox:
         im = im.crop(bbox)
         # im.show()
-        dir = './data/{}'.format(email)
+        dir = './data/{}/A'.format(hex(fileName).upper().split('X')[1])
         if not os.path.exists(dir):
             os.makedirs(dir)
 
         im = scale(im, [64, 64])
         im.save(dir + '/{}.jpg'.format(fileName), 'JPEG')
-        return dir + '/{}.jpg'.format(fileName)
+        return dir[:-2]
 
 
 # 1. url -> buffer
@@ -94,7 +92,7 @@ def backgroundProcessing(request):
     handwritesDic = makeHandwritesDic(body['handwrites'], email)
 
     # ml code here
-    result = testDumpResult(handwritesDic)
+    result = written2all(handwritesDic)
     return result
 
 
