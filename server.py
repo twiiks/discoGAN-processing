@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 from flask import Flask, request
 import json
 import threading
@@ -6,7 +8,6 @@ import requests
 import base64
 
 app = Flask(__name__)
-
 
 # result test
 def testDumpResult(testResultB64):
@@ -40,7 +41,6 @@ def processing_fontto():
     return json.dumps(backgroundProcessing(request))
 
 def backgroundProcessing(request):
-    time.sleep(2)
     body = request.json
     email = body['email']
     handwritesDic = makeHandwritesDic(body['handwrites'])
