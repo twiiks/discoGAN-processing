@@ -16,9 +16,10 @@ app = Flask(__name__)
 # result test
 def testDumpResult(handwritesDic):
     afterTestResultDic = {}
+    print(handwritesDic)
     with open(handwritesDic[45572], 'rb') as image_file:
         afterTestResultDic[ord('폰')] = base64.b64encode(image_file.read()).decode('utf-8')
-    with open(handwritesDic[46028], 'rb') as image_file:
+    with open(handwritesDic[48528], 'rb') as image_file:
         afterTestResultDic[ord('토')] = base64.b64encode(image_file.read()).decode('utf-8')
     return afterTestResultDic
 
