@@ -46,7 +46,7 @@ def UnicodeToKoreanClass(unicode):
 def written2all(written):
     print(written)
     STANDARD_L = [0, '', '', '', 'B204', 'BD90', '', '', '', '']
-    TARGETS = [0, '', '', '', 'D1A0', 'BB34', '', '', '', '']
+    TARGETS = [0, '', '', '', 'D1A0', 'D3F0', '', '', '', '']
     output = {}
     for code, path in written.items():
         config, _ = get_config()
@@ -56,9 +56,10 @@ def written2all(written):
         uniclass = UnicodeToKoreanClass(code)
 
         # pth 없으면 넘김
-        if not os.path.exists('./pths/%s' % (STANDARD_L[uniclass])):
+        if STANDARD_L[uniclass] == '':
             continue
 
+        print('./pths/%s' % (STANDARD_L[uniclass]))
         config.load_path = './pths/%s' % (STANDARD_L[uniclass])
 
         target = TARGETS[uniclass]
@@ -76,7 +77,6 @@ def written2all(written):
         tester = Tester(config, a_data_loader, name_pth)
         img_AB = tester.test()
 
-
         dir = './output'
         if not os.path.exists(dir):
             os.makedirs(dir)
@@ -87,3 +87,4 @@ def written2all(written):
             output[code] = b64Image
 
     return output
+
