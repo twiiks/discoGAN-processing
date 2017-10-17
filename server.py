@@ -11,6 +11,10 @@ from PIL import Image, ImageChops
 from io import BytesIO
 from written2all import written2all
 
+from tornado.wsgi import WSGIContainer
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop
+
 app = Flask(__name__)
 
 
@@ -102,4 +106,7 @@ def test_root():
 
 
 if __name__ == '__main__':
-    app.run(port=5959, debug=True)
+    http_server = HTTPServer(WSGIContainer(app))
+    http_server.listen(5959)
+    IOLoop.instance().start()
+    # app.run(port=5959, debug=True)
