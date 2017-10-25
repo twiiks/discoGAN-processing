@@ -11,7 +11,7 @@
 1. install dependencies
 ```
 pip install -r requirements.txt
-``
+```
 2. start flask server
 ```
 python server.py
