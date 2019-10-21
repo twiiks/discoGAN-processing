@@ -31,4 +31,4 @@ tornado==4.5.2
 tqdm==4.19.2
 urllib3==1.22
 vine==1.1.4
-Werkzeug==0.12.2
+Werkzeug==0.15.3
