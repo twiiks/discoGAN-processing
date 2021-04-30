@@ -22,7 +22,7 @@ pyasn1==0.3.7
 pycparser==2.18
 pytz==2017.2
 requests==2.18.4
-rsa==3.4.2
+rsa==4.7
 s3transfer==0.1.11
 six==1.11.0
 torch==0.2.0.post4
