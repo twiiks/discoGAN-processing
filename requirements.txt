@@ -29,6 +29,6 @@ torch==0.2.0.post4
 torchvision==0.1.9
 tornado==4.5.2
 tqdm==4.19.2
-urllib3==1.22
+urllib3==1.26.5
 vine==1.1.4
 Werkzeug==0.12.2
